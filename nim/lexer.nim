@@ -1,3 +1,4 @@
+import future
 import strutils
 import token
 
@@ -8,19 +9,37 @@ type
     readPosition: int # current position in input (after current char)
     ch: char # current char under examination
 
+proc isLetter(ch: char): bool = ch.isAlphaNumeric or ch == '_'
+
 proc readChar(lexer: Lexer) =
   if lexer.readPosition > len(lexer.input):
     lexer.ch = '\0'
   else:
     lexer.ch = lexer.input[lexer.readPosition]
   lexer.position = lexer.readPosition
-  lexer.readPosition += 1
+  lexer.readPosition.inc
+
+template read(lexer: Lexer, fn: (x: char) -> bool): string =
+  var position = lexer.position
+  while lexer.ch.fn:
+    lexer.readChar
+  lexer.input[position..<lexer.position]
+
+proc readIdentifier(lexer: Lexer): string = lexer.read(isLetter)
+
+proc readNumber(lexer: Lexer): string = lexer.read(isDigit)
+
+proc skipWhitespace(lexer: Lexer) =
+  while lexer.ch.isSpaceAscii():
+    lexer.readChar
 
 proc newLexer*(input: string): Lexer =
   result = Lexer(input: input)
   result.readChar
 
 proc nextToken*(lexer: Lexer): Token =
+  lexer.skipWhitespace
+
   case lexer.ch:
     of '=':
       result = newToken(Assign, lexer.ch)
@@ -40,23 +59,66 @@ proc nextToken*(lexer: Lexer): Token =
       result = newToken(Rbrace, lexer.ch)
     of '\0':
       result = newToken(Eof, "")
-    else: discard
+    of 'a'..'z', 'A'..'Z', '_':
+      let literal = lexer.readIdentifier
+      return newToken(literal.LookupIdent, literal)
+    of '0'..'9':
+      return newToken(Int, lexer.readNumber)
+    else:
+      result = newToken(Illegal, lexer.ch)
 
   lexer.readChar
 
 when isMainModule:
   let
-    input = "=+(){},;"
+    input = """let five = 5;
+let ten = 10;
+
+let add = fn(x, y) {
+  x + y;
+};
+
+let result = add(five, ten);
+"""
+
     tests = [
+      newToken(Let, "let"),
+      newToken(Ident, "five"),
       newToken(Assign, "="),
-      newToken(Plus, "+"),
+      newToken(Int, "5"),
+      newToken(Semicolon, ";"),
+      newToken(Let, "let"),
+      newToken(Ident, "ten"),
+      newToken(Assign, "="),
+      newToken(Int, "10"),
+      newToken(Semicolon, ";"),
+      newToken(Let, "let"),
+      newToken(Ident, "add"),
+      newToken(Assign, "="),
+      newToken(Function, "fn"),
       newToken(Lparen, "("),
+      newToken(Ident, "x"),
+      newToken(Comma, ","),
+      newToken(Ident, "y"),
       newToken(Rparen, ")"),
       newToken(Lbrace, "{"),
-      newToken(Rbrace, "}"),
-      newToken(Comma, ","),
+      newToken(Ident, "x"),
+      newToken(Plus, "+"),
+      newToken(Ident, "y"),
       newToken(Semicolon, ";"),
-      newToken(Eof, "")
+      newToken(Rbrace, "}"),
+      newToken(Semicolon, ";"),
+      newToken(Let, "let"),
+      newToken(Ident, "result"),
+      newToken(Assign, "="),
+      newToken(Ident, "add"),
+      newToken(Lparen, "("),
+      newToken(Ident, "five"),
+      newToken(Comma, ","),
+      newToken(Ident, "ten"),
+      newToken(Rparen, ")"),
+      newToken(Semicolon, ";"),
+      newToken(Eof, ""),
     ]
     lexer = newLexer(input)
 

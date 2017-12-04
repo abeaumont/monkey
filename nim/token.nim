@@ -35,3 +35,10 @@ const Keywords* = {
 proc newToken*(t: TokenType, literal: string): Token = (t, literal)
 
 proc newToken*(t: TokenType, literal: char): Token = newToken(t, $literal)
+
+proc LookupIdent*(ident: string): TokenType =
+  if Keywords.hasKey(ident):
+    Keywords[ident]
+  else:
+    Ident
+

@@ -65,7 +65,7 @@ when isMainModule:
     let (t, literal) = lexer.nextToken()
     doAssert(t == expectedType,
              "tests[$1] - tokentype wrong. expected=`$2', got=`$3'" %
-             [$i, expectedType, t])
+             [$i, $expectedType, $t])
     doAssert(literal == expectedLiteral,
              "tests[$1] - literal wrong. expected=`$2', got=`$3'" %
              [$i, expectedLiteral, literal])

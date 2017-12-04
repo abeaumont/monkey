@@ -1,31 +1,37 @@
+import tables
+
 type
-  TokenType* = string
-  Token* = (string, string)
+  TokenType* = enum
+    Illegal,
+    Eof,
 
-const
-  Illegal* = "ILLEGAL"
-  Eof* = "EOF"
+    # Identfiers + literals
+    Ident, # add, foobar, x, y, ...
+    Int, # 1343456
 
-  # Identfiers + literals
-  Ident* = "IDENT" # add, foobar, x, y, ...
-  Int* = "INT" # 1343456
+    # Operators
+    Assign,
+    Plus,
 
-  # Operators
-  Assign* = "="
-  Plus* = "+"
+    # Delimiters
+    Comma,
+    Semicolon,
 
-  # Delimiters
-  Comma* = ","
-  Semicolon* = ";"
+    Lparen,
+    Rparen,
+    Lbrace,
+    Rbrace,
 
-  Lparen* = "("
-  Rparen* = ")"
-  Lbrace* = "{"
-  Rbrace* = "}"
+    # Keywords
+    Function,
+    Let,
+  Token* = (TokenType, string)
 
-  # Keywords
-  Function* = "FUNCTION"
-  Let* = "LET"
+const Keywords* = {
+  "fn": Function,
+  "let": Let,
+}.toTable
 
 proc newToken*(t: TokenType, literal: string): Token = (t, literal)
+
 proc newToken*(t: TokenType, literal: char): Token = newToken(t, $literal)

@@ -32,11 +32,22 @@ type
     # Keywords
     Function,
     Let,
+    True,
+    False,
+    If,
+    Else,
+    Return
+
   Token* = (TokenType, string)
 
 const Keywords* = {
   "fn": Function,
   "let": Let,
+  "true": True,
+  "false": False,
+  "if": If,
+  "else": Else,
+  "return": Return
 }.toTable
 
 proc newToken*(t: TokenType, literal: string): Token = (t, literal)

@@ -93,6 +93,12 @@ let add = fn(x, y) {
 let result = add(five, ten);
 !-/*5;
 5 < 10 > 5;
+
+if (5 < 10) {
+  return true;
+} else {
+  return false;
+}
 """
 
     tests = [
@@ -144,6 +150,23 @@ let result = add(five, ten);
       newToken(Gt, ">"),
       newToken(Int, "5"),
       newToken(Semicolon, ";"),
+      newToken(If, "if"),
+      newToken(Lparen, "("),
+      newToken(Int, "5"),
+      newToken(Lt, "<"),
+      newToken(Int, "10"),
+      newToken(Rparen, ")"),
+      newToken(Lbrace, "{"),
+      newToken(Return, "return"),
+      newToken(True, "true"),
+      newToken(Semicolon, ";"),
+      newToken(Rbrace, "}"),
+      newToken(Else, "else"),
+      newToken(Lbrace, "{"),
+      newToken(Return, "return"),
+      newToken(False, "false"),
+      newToken(Semicolon, ";"),
+      newToken(Rbrace, "}"),
       newToken(Eof, ""),
     ]
     lexer = newLexer(input)

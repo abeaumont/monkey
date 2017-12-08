@@ -43,6 +43,20 @@ proc nextToken*(lexer: Lexer): Token =
   case lexer.ch:
     of '=':
       result = newToken(Assign, lexer.ch)
+    of '+':
+      result = newToken(Plus, lexer.ch)
+    of '-':
+      result = newToken(Minus, lexer.ch)
+    of '!':
+      result = newToken(Bang, lexer.ch)
+    of '/':
+      result = newToken(Slash, lexer.ch)
+    of '*':
+      result = newToken(Asterisk, lexer.ch)
+    of '<':
+      result = newToken(Lt, lexer.ch)
+    of '>':
+      result = newToken(Gt, lexer.ch)
     of ';':
       result = newToken(Semicolon, lexer.ch)
     of '(':
@@ -51,8 +65,6 @@ proc nextToken*(lexer: Lexer): Token =
       result = newToken(Rparen, lexer.ch)
     of ',':
       result = newToken(Comma, lexer.ch)
-    of '+':
-      result = newToken(Plus, lexer.ch)
     of '{':
       result = newToken(Lbrace, lexer.ch)
     of '}':
@@ -79,6 +91,8 @@ let add = fn(x, y) {
 };
 
 let result = add(five, ten);
+!-/*5;
+5 < 10 > 5;
 """
 
     tests = [
@@ -117,6 +131,18 @@ let result = add(five, ten);
       newToken(Comma, ","),
       newToken(Ident, "ten"),
       newToken(Rparen, ")"),
+      newToken(Semicolon, ";"),
+      newToken(Bang, "!"),
+      newToken(Minus, "-"),
+      newToken(Slash, "/"),
+      newToken(Asterisk, "*"),
+      newToken(Int, "5"),
+      newToken(Semicolon, ";"),
+      newToken(Int, "5"),
+      newToken(Lt, "<"),
+      newToken(Int, "10"),
+      newToken(Gt, ">"),
+      newToken(Int, "5"),
       newToken(Semicolon, ";"),
       newToken(Eof, ""),
     ]

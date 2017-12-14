@@ -1,0 +1,4 @@
+(executable
+ ((name lexer_test)
+  (libraries (core_kernel alcotest))))
+

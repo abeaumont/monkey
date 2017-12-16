@@ -1,4 +1,7 @@
 (executable
  ((name lexer_test)
-  (libraries (core_kernel alcotest))))
+  (libraries (core_kernel alcotest))
+  (preprocess (pps (ppx_variants_conv)))))
+
+
 

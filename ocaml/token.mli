@@ -9,6 +9,7 @@ module Type : sig
     | Comma | Semicolon | Lparen | Rparen | Lbrace | Rbrace
     (* Keywords *)
     | Function | Let | True | False | If | Else | Return
+  [@@deriving variants]
 
   val to_string : t -> string
 

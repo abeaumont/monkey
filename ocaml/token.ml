@@ -9,33 +9,9 @@ module Type = struct
     | Comma | Semicolon | Lparen | Rparen | Lbrace | Rbrace
     (* Keywords *)
     | Function | Let | True | False | If | Else | Return
+  [@@deriving variants]
 
-  let to_string = function
-    | Illegal -> "ILLEGAL"
-    | Eof -> "EOF"
-    | Ident -> "IDENT"
-    | Int -> "INT"
-    | Assign -> "ASSIGN"
-    | Plus -> "PLUS"
-    | Minus -> "MINUS"
-    | Bang -> "BANG"
-    | Asterisk -> "ASTERISK"
-    | Slash -> "SLASH"
-    | Lt -> "LT"
-    | Gt -> "GT"
-    | Comma -> "COMMA"
-    | Semicolon -> "SEMICOLON"
-    | Lparen -> "LPAREN"
-    | Rparen -> "RPAREN"
-    | Lbrace -> "LBRACE"
-    | Rbrace -> "RBRACE"
-    | Function -> "FUNCTION"
-    | Let -> "LET"
-    | True -> "TRUE"
-    | False -> "FALSE"
-    | If -> "IF"
-    | Else -> "ELSE"
-    | Return -> "RETURN"
+  let to_string = Variants.to_name
 
   let lookup_ident = function
     | "fn" -> Function

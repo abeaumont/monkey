@@ -1,4 +1,5 @@
 B _build/default
+FLG -ppx '/home/abeaumont/monkey/ocaml/_build/default/.ppx/ppx_variants_conv/ppx.exe --as-ppx'
 FLG -w -40
 PKG alcotest
 PKG astring
@@ -22,6 +23,7 @@ PKG num.core
 PKG ppx_assert.runtime-lib
 PKG ppx_bench.runtime-lib
 PKG ppx_compare.runtime-lib
+PKG ppx_deriving.runtime
 PKG ppx_expect.collector
 PKG ppx_expect.common
 PKG ppx_expect.config
@@ -33,5 +35,6 @@ PKG sexplib
 PKG sexplib.0
 PKG stdio
 PKG typerep
+PKG uchar
 PKG unix
 PKG variantslib

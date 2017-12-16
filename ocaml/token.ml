@@ -1,34 +1,14 @@
 module Type = struct
   type t =
-    | Illegal
-    | Eof
+    | Illegal | Eof
     (* Identifiers + literals *)
-    | Ident  (** add, foobar, x, y, ... *)
-    | Int  (** 1343456 *)
+    | Ident  (* add, foobar, x, y, ... *) | Int  (* 1343456 *)
     (* Operators *)
-    | Assign
-    | Plus
-    | Minus
-    | Bang
-    | Asterisk
-    | Slash
-    | Lt
-    | Gt
+    | Assign | Plus | Minus | Bang | Asterisk | Slash | Lt | Gt
     (* Delimiters *)
-    | Comma
-    | Semicolon
-    | Lparen
-    | Rparen
-    | Lbrace
-    | Rbrace
+    | Comma | Semicolon | Lparen | Rparen | Lbrace | Rbrace
     (* Keywords *)
-    | Function
-    | Let
-    | True
-    | False
-    | If
-    | Else
-    | Return
+    | Function | Let | True | False | If | Else | Return
 
   let to_string = function
     | Illegal -> "ILLEGAL"
@@ -57,7 +37,6 @@ module Type = struct
     | Else -> "ELSE"
     | Return -> "RETURN"
 
-
   let lookup_ident = function
     | "fn" -> Function
     | "let" -> Let
@@ -67,7 +46,6 @@ module Type = struct
     | "else" -> Else
     | "return" -> Return
     | _ -> Ident
-
 end
 
 type t = Type.t * string

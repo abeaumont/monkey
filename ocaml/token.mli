@@ -1,34 +1,14 @@
 module Type : sig
   type t =
-    | Illegal
-    | Eof
+    | Illegal | Eof
     (* Identifiers + literals *)
-    | Ident  (** add, foobar, x, y, ... *)
-    | Int  (** 1343456 *)
+    | Ident  (* add, foobar, x, y, ... *) | Int  (* 1343456 *)
     (* Operators *)
-    | Assign
-    | Plus
-    | Minus
-    | Bang
-    | Asterisk
-    | Slash
-    | Lt
-    | Gt
+    | Assign | Plus | Minus | Bang | Asterisk | Slash | Lt | Gt
     (* Delimiters *)
-    | Comma
-    | Semicolon
-    | Lparen
-    | Rparen
-    | Lbrace
-    | Rbrace
+    | Comma | Semicolon | Lparen | Rparen | Lbrace | Rbrace
     (* Keywords *)
-    | Function
-    | Let
-    | True
-    | False
-    | If
-    | Else
-    | Return
+    | Function | Let | True | False | If | Else | Return
 
   val to_string : t -> string
 

@@ -12,9 +12,11 @@ class Lexer {
 	public function nextToken(): Token {
 		skipWhitespace();
 		var type: TokenType = switch ch {
+			case '=' if (peekChar() == '='): Eq;
 			case '=': Assign;
 			case '+': Plus;
 			case '-': Minus;
+			case '!' if (peekChar() == '='): NotEq;
 			case '!': Bang;
 			case '/': Slash;
 			case '*': Asterisk;
@@ -32,6 +34,12 @@ class Lexer {
 			case _: Illegal;
 		};
 		switch type {
+			case Eq | NotEq:
+				var literal = ch;
+				readChar();
+				literal += ch;
+				readChar();
+				return new Token(type, literal);
 			case Ident:
 				var literal = readIdentifier();
 				return new Token(Token.lookupIdent(literal), literal);
@@ -48,6 +56,8 @@ class Lexer {
 		position = read_position;
 		read_position += 1;
 	}
+
+	function peekChar(): String return input.charAt(read_position);
 
 	function read(fn: Void -> Bool): String {
 		var pos = position;

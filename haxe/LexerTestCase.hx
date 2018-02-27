@@ -17,7 +17,11 @@ if (5 < 10) {
     return true;
 } else {
     return false;
-}';
+}
+
+10 == 10;
+10 != 9;
+';
 
 				var tests: Array<Token> = [
 					new Token(Let, 'let'),
@@ -85,6 +89,14 @@ if (5 < 10) {
 					new Token(False, 'false'),
 					new Token(Semicolon, ';'),
 					new Token(Rbrace, '}'),
+					new Token(Int_, '10'),
+					new Token(Eq, '=='),
+					new Token(Int_, '10'),
+					new Token(Semicolon, ';'),
+					new Token(Int_, '10'),
+					new Token(NotEq, '!='),
+					new Token(Int_, '9'),
+					new Token(Semicolon, ';'),
 					new Token(Eof, ''),
 				];
 

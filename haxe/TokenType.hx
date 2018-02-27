@@ -18,6 +18,8 @@ enum TokenType {
 
 	Lt;
 	Gt;
+	Eq;
+	NotEq;
 
 	// Delimiters
 	Comma;

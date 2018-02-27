@@ -1,10 +1,11 @@
 B _build/default
-FLG -ppx '/home/abeaumont/monkey/ocaml/_build/default/.ppx/ppx_variants_conv/ppx.exe --as-ppx'
+FLG -ppx '/home/abeaumont/nc/r/monkey/ocaml/_build/default/.ppx/ppx_variants_conv/ppx.exe --as-ppx'
 FLG -w -40
 PKG alcotest
 PKG astring
 PKG base
 PKG base.caml
+PKG base.md5
 PKG base.shadow_stdlib
 PKG bigarray
 PKG bin_prot
@@ -18,12 +19,9 @@ PKG fmt
 PKG fmt.cli
 PKG fmt.tty
 PKG jane-street-headers
-PKG num
-PKG num.core
 PKG ppx_assert.runtime-lib
 PKG ppx_bench.runtime-lib
 PKG ppx_compare.runtime-lib
-PKG ppx_deriving.runtime
 PKG ppx_expect.collector
 PKG ppx_expect.common
 PKG ppx_expect.config
@@ -38,3 +36,4 @@ PKG typerep
 PKG uchar
 PKG unix
 PKG variantslib
+S .

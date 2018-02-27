@@ -24,7 +24,7 @@ let peek_char l =
 let read f l =
   let pos = l.position in
   while f l.ch do read_char l done;
-  Substring.create l.input ~pos ~len:(l.position - pos) |> Substring.to_string
+  Substring.create (Bytes.of_string l.input) ~pos ~len:(l.position - pos) |> Substring.to_string
 
 let read_identifier = read Char.is_alpha
 

@@ -19,6 +19,12 @@ proc readChar(lexer: Lexer) =
   lexer.position = lexer.readPosition
   lexer.readPosition.inc
 
+proc peekchar(lexer: Lexer): char =
+  if lexer.readPosition > len(lexer.input):
+    '\0'
+  else:
+    lexer.input[lexer.readPosition]
+
 template read(lexer: Lexer, fn: (x: char) -> bool): string =
   var position = lexer.position
   while lexer.ch.fn:
@@ -42,13 +48,23 @@ proc nextToken*(lexer: Lexer): Token =
 
   case lexer.ch:
     of '=':
-      result = newToken(Assign, lexer.ch)
+      if lexer.peekChar() == '=':
+        let ch = lexer.ch
+        lexer.readChar()
+        result = newToken(Eq, ch & lexer.ch)
+      else:
+        result = newToken(Assign, lexer.ch)
     of '+':
       result = newToken(Plus, lexer.ch)
     of '-':
       result = newToken(Minus, lexer.ch)
     of '!':
-      result = newToken(Bang, lexer.ch)
+      if lexer.peekChar() == '=':
+        let ch = lexer.ch
+        lexer.readChar()
+        result = newToken(NotEq, ch & lexer.ch)
+      else:
+        result = newToken(Bang, lexer.ch)
     of '/':
       result = newToken(Slash, lexer.ch)
     of '*':
@@ -99,6 +115,9 @@ if (5 < 10) {
 } else {
   return false;
 }
+
+10 == 10;
+10 != 9;
 """
 
     tests = [
@@ -167,6 +186,14 @@ if (5 < 10) {
       newToken(False, "false"),
       newToken(Semicolon, ";"),
       newToken(Rbrace, "}"),
+      newToken(Int, "10"),
+      newToken(Eq, "=="),
+      newToken(Int, "10"),
+      newToken(Semicolon, ";"),
+      newToken(Int, "10"),
+      newToken(NotEq, "!="),
+      newToken(Int, "9"),
+      newToken(Semicolon, ";"),
       newToken(Eof, ""),
     ]
     lexer = newLexer(input)

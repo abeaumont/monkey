@@ -19,6 +19,8 @@ type
 
     Lt,
     Gt,
+    Eq,
+    NotEq,
 
     # Delimiters
     Comma,

@@ -4,7 +4,7 @@ module Type = struct
     (* Identifiers + literals *)
     | Ident  (* add, foobar, x, y, ... *) | Int  (* 1343456 *)
     (* Operators *)
-    | Assign | Plus | Minus | Bang | Asterisk | Slash | Lt | Gt
+    | Assign | Plus | Minus | Bang | Asterisk | Slash | Lt | Gt | Eq | NotEq
     (* Delimiters *)
     | Comma | Semicolon | Lparen | Rparen | Lbrace | Rbrace
     (* Keywords *)

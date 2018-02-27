@@ -15,6 +15,12 @@ let read_char l =
   l.position <- l.read_position;
   l.read_position <- l.read_position + 1
 
+let peek_char l =
+  if l.read_position >= String.length l.input then
+    '\000'
+  else
+    (l.input).[l.read_position]
+
 let read f l =
   let pos = l.position in
   while f l.ch do read_char l done;
@@ -35,10 +41,22 @@ let next_token l =
   let module Type = Token.Type in
   let literal = String.of_char l.ch in
   let t = match l.ch with
-    | '=' -> Token.create Type.Assign literal
+    | '=' ->
+      if peek_char l = '=' then
+        let ch = l.ch in
+        read_char l;
+        Token.create Type.Eq (String.of_char_list [ch; l.ch]);
+      else
+        Token.create Type.Assign literal
     | '+' -> Token.create Type.Plus literal
     | '-' -> Token.create Type.Minus literal
-    | '!' -> Token.create Type.Bang literal
+    | '!' ->
+      if peek_char l = '=' then
+        let ch = l.ch in
+        read_char l;
+        Token.create Type.NotEq (String.of_char_list [ch; l.ch])
+      else
+        Token.create Type.Bang literal
     | '/' -> Token.create Type.Slash literal
     | '*' -> Token.create Type.Asterisk literal
     | '<' -> Token.create Type.Lt literal

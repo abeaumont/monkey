@@ -16,6 +16,9 @@ if (5 < 10) {
 } else {
   return false;
 }
+
+10 == 10;
+10 != 9;
 "
   and tests =
     let open Token in
@@ -85,6 +88,14 @@ if (5 < 10) {
       create False "false";
       create Semicolon ";";
       create Rbrace "}";
+      create Int "10";
+      create Eq "==";
+      create Int "10";
+      create Semicolon ";";
+      create Int "10";
+      create NotEq "!=";
+      create Int "9";
+      create Semicolon ";";
       create Eof ""
     ] in
   let lexer = Lexer.create input in
